@@ -2,7 +2,7 @@
 	"name": "SQL script 1",
 	"properties": {
 		"content": {
-			"query": "SELECT  count(1) from movie\nwhere year=''\n\nselect * from movie\nwhere title like 'Cin%'",
+			"query": "SELECT  count(1) from movie\nwhere year=''\n\nselect * from movie\nwhere title='Cinemania'\n\nselect * from movie\nwhere movie='26116'\n\nselect * from movie\nwhere title like 'Fright Night%'",
 			"metadata": {
 				"language": "sql"
 			},
