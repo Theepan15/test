@@ -639,8 +639,8 @@
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table',",
 						"     staged: true) ~> datalakesourceMovie",
-						"datalakesourceMovie alterRow(updateIf(title=='Birth of a Nation, The'),",
-						"     deleteIf(title=='Cinemania')) ~> alterRow1",
+						"datalakesourceMovie alterRow(updateIf(title=='Fright Night'),",
+						"     deleteIf(movie=='26116')) ~> alterRow1",
 						"alterRow1 derive(title = title + '(' + year + ')') ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -784,7 +784,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"content": {
-					"query": "SELECT  count(1) from movie\nwhere year=''\n\nselect * from movie\nwhere title like 'Cin%'",
+					"query": "SELECT  count(1) from movie\nwhere year=''\n\nselect * from movie\nwhere title='Cinemania'\n\nselect * from movie\nwhere movie='26116'\n\nselect * from movie\nwhere title like 'Fright Night%'",
 					"metadata": {
 						"language": "sql"
 					},
