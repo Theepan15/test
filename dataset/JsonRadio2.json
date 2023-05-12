@@ -19,7 +19,7 @@
 			"type": "object",
 			"properties": {
 				"ts": {
-					"type": "integer"
+					"type": "string"
 				},
 				"userId": {
 					"type": "string"

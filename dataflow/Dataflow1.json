@@ -13,10 +13,23 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "CountofSubsTypeByGender"
+				},
+				{
+					"name": "OriginalData"
+				},
+				{
+					"name": "SubsbyLocation"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          ts as integer,",
+				"          ts as string,",
 				"          userId as string,",
 				"          sessionId as integer,",
 				"          page as string,",
@@ -37,7 +50,42 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     documentForm: 'documentPerLine') ~> source1"
+				"     documentForm: 'documentPerLine',",
+				"     partitionBy('roundRobin', 200)) ~> source1",
+				"source1 select(mapColumn(",
+				"          timestamp = ts,",
+				"          page,",
+				"          method,",
+				"          status,",
+				"          level,",
+				"          location,",
+				"          lastName,",
+				"          firstName,",
+				"          registration,",
+				"          gender",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 aggregate(groupBy(gender,",
+				"          level),",
+				"     CountofSubtypeGender = count()) ~> CountofSubsTypeByGender",
+				"select1 select(mapColumn(",
+				"          timestamp,",
+				"          page,",
+				"          method,",
+				"          status,",
+				"          level,",
+				"          location,",
+				"          lastName,",
+				"          firstName,",
+				"          registration,",
+				"          gender",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> OriginalData",
+				"select1 aggregate(groupBy(location),",
+				"     SubsByLocation = count(),",
+				"          timestamp = first(timestamp)) ~> SubsbyLocation"
 			]
 		}
 	}
