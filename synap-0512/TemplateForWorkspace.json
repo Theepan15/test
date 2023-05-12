@@ -183,9 +183,64 @@
 				"type": "AzureSqlDWTable",
 				"schema": [
 					{
-						"name": "col1",
+						"name": "timestamp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "page",
+						"type": "nvarchar"
+					},
+					{
+						"name": "method",
+						"type": "nvarchar"
+					},
+					{
+						"name": "status",
 						"type": "int",
 						"precision": 10
+					},
+					{
+						"name": "level",
+						"type": "nvarchar"
+					},
+					{
+						"name": "location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "lastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "firstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "registration",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "gender",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CountofSubtypeGender",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "SubsByLocation",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "fullname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "state",
+						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
@@ -352,8 +407,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
-						"     documentForm: 'documentPerLine',",
-						"     partitionBy('roundRobin', 200)) ~> source1",
+						"     documentForm: 'documentPerLine') ~> source1",
 						"source1 select(mapColumn(",
 						"          timestamp = ts,",
 						"          page,",
@@ -425,7 +479,20 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
-						"          col1 as integer",
+						"          timestamp as string,",
+						"          page as string,",
+						"          method as string,",
+						"          status as integer,",
+						"          level as string,",
+						"          location as string,",
+						"          lastName as string,",
+						"          firstName as string,",
+						"          registration as integer,",
+						"          gender as string,",
+						"          CountofSubtypeGender as long,",
+						"          SubsByLocation as long,",
+						"          fullname as string,",
+						"          state as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -436,7 +503,21 @@
 						"     staged: true,",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          timestamp,",
+						"          page,",
+						"          method,",
+						"          status,",
+						"          level,",
+						"          location,",
+						"          registration,",
+						"          gender,",
+						"          CountofSubtypeGender,",
+						"          SubsByLocation,",
+						"          fullname,",
+						"          state",
+						"     )) ~> sink1"
 					]
 				}
 			},
@@ -486,6 +567,26 @@
 			},
 			"dependsOn": [],
 			"location": "eastus"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 2')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [timestamp]\n,[page]\n,[method]\n,[status]\n,[level]\n,[location]\n,[lastName]\n,[firstName]\n,[registration]\n,[gender]\n,[CountofSubtypeGender]\n,[SubsByLocation]\n,[fullname]\n,[state]\n FROM [dbo].[Radio]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "dw_test",
+						"poolName": "dw_test"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
 		}
 	]
 }
