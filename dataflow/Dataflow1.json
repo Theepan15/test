@@ -148,8 +148,6 @@
 				"          status as integer,",
 				"          level as string,",
 				"          location as string,",
-				"          lastName as string,",
-				"          firstName as string,",
 				"          registration as integer,",
 				"          gender as string,",
 				"          CountofSubtypeGender as long,",

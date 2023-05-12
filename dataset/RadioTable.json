@@ -34,14 +34,6 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "lastName",
-				"type": "nvarchar"
-			},
-			{
-				"name": "firstName",
-				"type": "nvarchar"
-			},
-			{
 				"name": "registration",
 				"type": "int",
 				"precision": 10
