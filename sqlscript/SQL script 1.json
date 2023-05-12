@@ -2,7 +2,7 @@
 	"name": "SQL script 1",
 	"properties": {
 		"content": {
-			"query": "SELECT TOP (100) [movie]\n,[title]\n,[genres]\n,[year]\n,[Rating]\n,[RottenTomato]\n FROM [dbo].[Movie]\n order by year\n\n SELECT COUNT(1) FROM [dbo].[Movie]",
+			"query": "SELECT  title,count(1)\n FROM [dbo].[Movie]\ngroup by title\nhaving count(1) > 1\n\nselect * from movie\nwhere title='Cinderella'",
 			"metadata": {
 				"language": "sql"
 			},
