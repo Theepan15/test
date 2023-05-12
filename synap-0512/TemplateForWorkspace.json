@@ -61,7 +61,8 @@
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
-								}
+								},
+								"linkedServiceParameters": {}
 							},
 							"staging": {
 								"linkedService": {
@@ -205,14 +206,6 @@
 					},
 					{
 						"name": "location",
-						"type": "nvarchar"
-					},
-					{
-						"name": "lastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "firstName",
 						"type": "nvarchar"
 					},
 					{
@@ -485,8 +478,6 @@
 						"          status as integer,",
 						"          level as string,",
 						"          location as string,",
-						"          lastName as string,",
-						"          firstName as string,",
 						"          registration as integer,",
 						"          gender as string,",
 						"          CountofSubtypeGender as long,",
@@ -537,26 +528,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "CREATE TABLE [dbo].[Radio]\n(\n    col1 int NOT NULL\n)\nWITH\n(\n    DISTRIBUTION = HASH (col1),\n    CLUSTERED COLUMNSTORE INDEX\n)\nGO\n",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "dw_test",
-						"poolName": "dw_test"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/dw_test')]",
 			"type": "Microsoft.Synapse/workspaces/sqlPools",
 			"apiVersion": "2019-06-01-preview",
@@ -567,26 +538,6 @@
 			},
 			"dependsOn": [],
 			"location": "eastus"
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 2')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) [timestamp]\n,[page]\n,[method]\n,[status]\n,[level]\n,[location]\n,[lastName]\n,[firstName]\n,[registration]\n,[gender]\n,[CountofSubtypeGender]\n,[SubsByLocation]\n,[fullname]\n,[state]\n FROM [dbo].[Radio]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "dw_test",
-						"poolName": "dw_test"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
 		}
 	]
 }
