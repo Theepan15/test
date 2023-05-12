@@ -12,7 +12,11 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "select1"
@@ -25,6 +29,18 @@
 				},
 				{
 					"name": "SubsbyLocation"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "Cleanup"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -68,7 +84,8 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 aggregate(groupBy(gender,",
 				"          level),",
-				"     CountofSubtypeGender = count()) ~> CountofSubsTypeByGender",
+				"     CountofSubtypeGender = count(),",
+				"          timestamp = first(timestamp)) ~> CountofSubsTypeByGender",
 				"select1 select(mapColumn(",
 				"          timestamp,",
 				"          page,",
@@ -85,7 +102,44 @@
 				"     skipDuplicateMapOutputs: true) ~> OriginalData",
 				"select1 aggregate(groupBy(location),",
 				"     SubsByLocation = count(),",
-				"          timestamp = first(timestamp)) ~> SubsbyLocation"
+				"          timestamp = first(timestamp)) ~> SubsbyLocation",
+				"OriginalData, CountofSubsTypeByGender join(OriginalData@timestamp == CountofSubsTypeByGender@timestamp,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1, SubsbyLocation join(OriginalData@timestamp == SubsbyLocation@timestamp,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2 select(mapColumn(",
+				"          timestamp = OriginalData@timestamp,",
+				"          page,",
+				"          method,",
+				"          status,",
+				"          level = OriginalData@level,",
+				"          location = OriginalData@location,",
+				"          lastName,",
+				"          firstName,",
+				"          registration,",
+				"          gender = OriginalData@gender,",
+				"          gender = CountofSubsTypeByGender@gender,",
+				"          level = CountofSubsTypeByGender@level,",
+				"          timestamp = CountofSubsTypeByGender@timestamp,",
+				"          CountofSubtypeGender,",
+				"          location = SubsbyLocation@location,",
+				"          SubsByLocation,",
+				"          timestamp = SubsbyLocation@timestamp",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Cleanup",
+				"Cleanup derive(fullname = firstName + \" \" + lastName,",
+				"          state = split(location,', ')[2]) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
