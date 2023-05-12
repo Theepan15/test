@@ -2,7 +2,7 @@
 	"name": "SQL script 1",
 	"properties": {
 		"content": {
-			"query": "SELECT  * from movie\norder by year \n\nselect * from movie\nwhere title='Cinderella'",
+			"query": "SELECT  * from movie\norder by year \n\nselect * from movie\nwhere title='Birth of a Nation, The'",
 			"metadata": {
 				"language": "sql"
 			},
