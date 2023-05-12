@@ -9,9 +9,28 @@
 		"type": "AzureSqlDWTable",
 		"schema": [
 			{
-				"name": "col1",
-				"type": "int",
-				"precision": 10
+				"name": "movie",
+				"type": "nvarchar"
+			},
+			{
+				"name": "title",
+				"type": "nvarchar"
+			},
+			{
+				"name": "genres",
+				"type": "nvarchar"
+			},
+			{
+				"name": "year",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rating",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RottenTomato",
+				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {
