@@ -9,9 +9,64 @@
 		"type": "AzureSqlDWTable",
 		"schema": [
 			{
-				"name": "col1",
+				"name": "timestamp",
+				"type": "nvarchar"
+			},
+			{
+				"name": "page",
+				"type": "nvarchar"
+			},
+			{
+				"name": "method",
+				"type": "nvarchar"
+			},
+			{
+				"name": "status",
 				"type": "int",
 				"precision": 10
+			},
+			{
+				"name": "level",
+				"type": "nvarchar"
+			},
+			{
+				"name": "location",
+				"type": "nvarchar"
+			},
+			{
+				"name": "lastName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "firstName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "registration",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "gender",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CountofSubtypeGender",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "SubsByLocation",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fullname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "state",
+				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {
