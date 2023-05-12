@@ -55,6 +55,7 @@
 				"     insertable:false,",
 				"     updateable:false,",
 				"     upsertable:false,",
+				"     keys:['movie'],",
 				"     format: 'table',",
 				"     staged: true,",
 				"     allowCopyCommand: true,",
