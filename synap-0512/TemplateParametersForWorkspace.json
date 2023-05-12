@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "synap-0512"
+		},
+		"AzureSynapseAnalytics1_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=synap-0512.sql.azuresynapse.net;Initial Catalog=dw_test"
+		},
+		"synap-0512-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synap-0512.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"synap-0512-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://datalake051201.dfs.core.windows.net"
+		}
+	}
+}
