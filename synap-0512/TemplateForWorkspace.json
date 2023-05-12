@@ -55,14 +55,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "Dataflow1",
+								"referenceName": "df_aggregate",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {
 								"linkedService": {
@@ -86,9 +85,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/Dataflow1')]",
-				"[concat(variables('workspaceId'), '/linkedServices/synap-0512-WorkspaceDefaultStorage')]",
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+				"[concat(variables('workspaceId'), '/dataflows/df_aggregate')]",
+				"[concat(variables('workspaceId'), '/linkedServices/synap-0512-WorkspaceDefaultStorage')]"
 			]
 		},
 		{
@@ -327,7 +325,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/Dataflow1')]",
+			"name": "[concat(parameters('workspaceName'), '/df_aggregate')]",
 			"type": "Microsoft.Synapse/workspaces/dataflows",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
