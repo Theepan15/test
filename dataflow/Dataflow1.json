@@ -56,7 +56,7 @@
 				"          Rating as string,",
 				"          RottenTomato as string",
 				"     ),",
-				"     deletable:false,",
+				"     deletable:true,",
 				"     insertable:false,",
 				"     updateable:true,",
 				"     upsertable:false,",
