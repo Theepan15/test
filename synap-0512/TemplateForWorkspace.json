@@ -652,7 +652,7 @@
 						"          Rating as string,",
 						"          RottenTomato as string",
 						"     ),",
-						"     deletable:false,",
+						"     deletable:true,",
 						"     insertable:false,",
 						"     updateable:true,",
 						"     upsertable:false,",
@@ -784,7 +784,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"content": {
-					"query": "SELECT  title,count(1)\n FROM [dbo].[Movie]\ngroup by title\nhaving count(1) > 1\n\nselect * from movie\nwhere title='Cinderella'",
+					"query": "SELECT  * from movie\norder by year \n\nselect * from movie\nwhere title='Cinderella'",
 					"metadata": {
 						"language": "sql"
 					},
